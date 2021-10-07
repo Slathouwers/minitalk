@@ -6,7 +6,7 @@
 /*   By: slathouw <slathouw@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 11:28:34 by slathouw          #+#    #+#             */
-/*   Updated: 2021/10/06 11:37:37 by slathouw         ###   ########.fr       */
+/*   Updated: 2021/10/07 10:13:18 by slathouw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	send_bit(char *s, pid_t pid)
 		if (!curr_char)
 			connection_terminate(server_pid);
 	}
-	if (curr_char && curr_char >> --i & 0x01)
+	if (curr_char && curr_char >> --i & 1)
 		kill(server_pid, SIGUSR1);
 	else if (curr_char)
 		kill(server_pid, SIGUSR2);

@@ -6,19 +6,19 @@
 /*   By: slathouw <slathouw@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 12:18:26 by slathouw          #+#    #+#             */
-/*   Updated: 2021/10/07 12:18:29 by slathouw         ###   ########.fr       */
+/*   Updated: 2021/10/08 11:01:43 by slathouw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-void	sig_handler(int sig, siginfo_t *siginfo, void *unused)
+void	sig_handler(int sig, siginfo_t *siginfo, void *uap)
 {
 	static unsigned char	curr_char = 0x00;
 	static int				cnt = 0;
 	static pid_t			client_pid = 0;
 
-	(void)unused;
+	(void)uap;
 	if (!client_pid)
 		client_pid = siginfo->si_pid;
 	curr_char |= (sig == SIGUSR1);
@@ -45,9 +45,7 @@ int	main(void)
 {
 	struct sigaction	sig_event;
 
-	ft_putstr_fd("Server PID [", 1);
-	ft_putnbr_fd(getpid(), 1);
-	ft_putstr_fd("]\n", 1);
+	ft_printf("Server PID: [%i]\n", getpid());
 	sig_event.sa_flags = SA_SIGINFO;
 	sig_event.sa_sigaction = sig_handler;
 	sigaction(SIGUSR1, &sig_event, 0);
